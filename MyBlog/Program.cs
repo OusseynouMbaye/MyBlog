@@ -1,10 +1,23 @@
 using MyBlog.Components;
+using Data;
+using Data.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options =>
+{
+    options.DataPath = @"..\..\..\Data\";
+    options.BlogPostsFolder = "Blogposts";
+    options.TagsFolder = "Tags";
+    options.CategoriesFolder = "Categories";
+    options.CommentsFolder = "Comments";
+});
+builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+
 
 var app = builder.Build();
 
