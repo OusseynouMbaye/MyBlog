@@ -1,12 +1,13 @@
 using MyBlog.Components;
 using Data;
 using Data.Models.Interfaces;
+using MyBlog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents().AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options =>
 {
@@ -17,6 +18,7 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
     options.CommentsFolder = "Comments";
 });
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+builder.Services.AddSingleton<WeatherService>();
 
 
 var app = builder.Build();
@@ -35,6 +37,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode();
 
 app.Run();

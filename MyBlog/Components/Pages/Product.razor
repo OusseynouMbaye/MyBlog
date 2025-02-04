@@ -1,0 +1,21 @@
+﻿@page "/product"
+@page "/product/{MyParameter:int}"
+@layout ProductLayout
+
+@inject WeatherService WeatherService
+
+<h3>Product</h3>
+
+
+<p>@weathertest</p>
+
+@code {
+    [Parameter]
+    public int MyParameter { get; set; }
+    private string weathertest= "hot";
+
+    protected override void OnInitialized()
+    {
+        weathertest = WeatherService.GetWeather();
+    }
+}

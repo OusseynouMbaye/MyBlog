@@ -1,0 +1,52 @@
+﻿@page "/lifecycle"
+
+<h3>Cycle de Vie du Composant</h3>
+
+<p>Regarde la console pour voir les messages de cycle de vie.</p>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Composant initialisé !");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        Console.WriteLine("Composant initialisé de manière asynchrone !");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Paramètres définis !");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Task.Delay(500);
+        Console.WriteLine("Paramètres définis de manière asynchrone !");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Console.WriteLine("Premier rendu terminé !");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Task.Delay(500);
+            Console.WriteLine("Premier rendu terminé de manière asynchrone !");
+        }
+    }
+
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
+}
+

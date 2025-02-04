@@ -16,6 +16,7 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th>tempTest</th>
                 <th>Date</th>
                 <th>Temp. (C)</th>
                 <th>Temp. (F)</th>
@@ -25,7 +26,10 @@ else
         <tbody>
             @foreach (var forecast in forecasts)
             {
+
                 <tr>
+                    <td>Temp @(forecast.TemperatureC)</td>
+
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
