@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Data.Models\Data.Models.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\SharedComponents\SharedComponents.csproj" />
   </ItemGroup>
 
 </Project>
