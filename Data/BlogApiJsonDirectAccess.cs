@@ -13,6 +13,9 @@ public class BlogApiJsonDirectAccess : IBlogApi
     {
         _settings = option.Value;
 
+        Console.WriteLine($"DataPath: {_settings.DataPath}");  //Move this line inside the constructor
+        Console.WriteLine($"Absolute Path: {Path.GetFullPath(_settings.DataPath)}");
+
         ManageDataPaths();
     }
     private void ManageDataPaths()
@@ -64,7 +67,6 @@ public class BlogApiJsonDirectAccess : IBlogApi
         return Task.CompletedTask;
     }
 
-
     public async Task<int> GetBlogPostCountAsync()
     {
         var list = await LoadAsync<BlogPost>(_settings.BlogPostsFolder);
@@ -74,6 +76,7 @@ public class BlogApiJsonDirectAccess : IBlogApi
     public async Task<List<BlogPost>> GetBlogPostsAsync(int numberofposts, int startindex)
     {
         var list = await LoadAsync<BlogPost>(_settings.BlogPostsFolder);
+        Console.WriteLine($"Nombre de blogs chargés : {list.Count}");
         return list.Skip(startindex).Take(numberofposts).ToList();
     }
 
@@ -87,7 +90,6 @@ public class BlogApiJsonDirectAccess : IBlogApi
         var list = await LoadAsync<Category>(_settings.CategoriesFolder);
         return list.FirstOrDefault(c => c.Id == id);
     }
-
 
     public async Task<List<Tag>> GetTagsAsync()
     {
@@ -139,7 +141,6 @@ public class BlogApiJsonDirectAccess : IBlogApi
         return item;
     }
 
-
     public async Task DeleteBlogPostAsync(string id)
     {
         await DeleteAsync(_settings.BlogPostsFolder, id);
@@ -168,5 +169,4 @@ public class BlogApiJsonDirectAccess : IBlogApi
     {
         await DeleteAsync(_settings.CommentsFolder, id);
     }
-
 }
