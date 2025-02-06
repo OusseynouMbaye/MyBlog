@@ -2,6 +2,9 @@ using MyBlog.Components;
 using Data;
 using Data.Models.Interfaces;
 using MyBlog.Client.Pages;
+using Data.Context;
+using Microsoft.EntityFrameworkCore;
+using Data.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,14 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
     options.CategoriesFolder = "Categories";
     options.CommentsFolder = "Comments";
 });
+
+builder.Services.AddDbContext<BlogDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("BlogOuziConnection"));
+});
+
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 var app = builder.Build();

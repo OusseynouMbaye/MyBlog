@@ -1,7 +1,9 @@
 @page "/"
 @using Data.Models.Interfaces
 @using Data.Models
+
 @inject IBlogApi _api
+@inject Data.UnitOfWork.IUnitOfWork UnitOfWork
 
 <h2>Blog Posts ici</h2>
 <ul>
@@ -15,8 +17,8 @@
     protected List<BlogPost> posts = new();
     protected override async Task OnInitializedAsync()
     {
-        posts = await _api.GetBlogPostsAsync(10, 0);
+        // posts = await _api.GetBlogPostsAsync(10, 0);
+        posts = (await UnitOfWork.BlogPosts.GetAllAsync()).ToList();
         await base.OnInitializedAsync();
     }
-
 }
