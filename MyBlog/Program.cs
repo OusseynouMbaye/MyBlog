@@ -5,6 +5,7 @@ using MyBlog.Client.Pages;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Data.UnitOfWork;
+using Data.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,5 +52,13 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Counter).Assembly)
     .AddAdditionalAssemblies(typeof(SharedComponents.Pages.Home).Assembly); ;
+
+// Exécuter la migration JSON vers SQLite au démarrage
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
+    var migrator = new JsonDataMigrator(dbContext);
+    await migrator.MigrateAsync();
+}
 
 app.Run();
