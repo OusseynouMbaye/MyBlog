@@ -5,9 +5,12 @@
 
 <h2>Blog Posts ici</h2>
 <ul>
+
     @foreach (var p in posts)
     {
-        <li>@p.Title</li>
+        @* <li>@p.Title</li> *@
+        <li><a href="/Post/@p.Id">@p.Title</a></li>
+
     }
 </ul>
 
