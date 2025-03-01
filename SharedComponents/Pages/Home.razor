@@ -1,4 +1,5 @@
 @page "/"
+@rendermode InteractiveServer
 @using Data.Models.Interfaces
 @using Data.Models
 @inject IBlogApi _api
@@ -11,6 +12,7 @@
 
 
 @code {
+    protected List<BlogPost> posts = new();
     public int totalBlogposts { get; set; }
     private async ValueTask<ItemsProviderResult<BlogPost>> LoadPosts(ItemsProviderRequest request)
     {
